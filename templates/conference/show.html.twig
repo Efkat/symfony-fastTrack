@@ -5,6 +5,7 @@
 {% block body %}
 
     {% if comments|length > 0 %}
+        <p>There are {{ comments |length }} comments.</p>
         {% for comment in comments %}
             {% if comment.photofilename %}
                 <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}">
@@ -17,6 +18,12 @@
                 {{ comment.text }}
             </p>
         {% endfor %}
+        {% if previous >= 0 %}
+            <a href="{{ path('conference', { id: conference.id, offset: previous }) }}">Previous</a>
+        {% endif%}
+        {% if next < comments | length %}
+            <a href="{{ path('conference', { id: conference.id, offset: next }) }}">Next</a>
+        {% endif %}
     {% else %}
         <div>No comments have been posted for this conference.</div>
     {% endif %}

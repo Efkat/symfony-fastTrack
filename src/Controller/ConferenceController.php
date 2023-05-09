@@ -17,24 +17,24 @@ use Twig\Error\SyntaxError;
 class ConferenceController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
-    public function index(Environment $envTwig, ConferenceRepository $conferenceRepository): Response
+    public function index(ConferenceRepository $conferenceRepository): Response
     {
-        return new Response($envTwig->render('conference/index.html.twig', [
+        return $this->render('conference/index.html.twig', [
             'conferences' => $conferenceRepository->findAll()
-        ]));
+        ]);
     }
 
     #[Route('/conference/{id}', name: 'conference')]
-    public function conference(Request $request, Environment $envTwig, Conference $conference, CommentRepository $commentRepository): Response
+    public function conference(Request $request, Conference $conference, CommentRepository $commentRepository): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
 
-        return new Response($envTwig->render('conference/show.html.twig', [
+        return $this->render('conference/show.html.twig', [
             'conference' => $conference,
             'comments' => $paginator,
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE)
-        ]));
+        ]);
     }
 }

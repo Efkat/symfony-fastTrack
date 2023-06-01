@@ -24,7 +24,7 @@ class ConferenceController extends AbstractController
         ]);
     }
 
-    #[Route('/conference/{id}', name: 'conference')]
+    #[Route('/conference/{slug}', name: 'conference')]
     public function conference(Request $request, Conference $conference, CommentRepository $commentRepository, ConferenceRepository$conferenceRepository): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));

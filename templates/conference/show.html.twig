@@ -3,7 +3,7 @@
 {% block title %} Conference Guestbook - {{ conference }} {% endblock %}
 
 {% block body %}
-
+    {{ form(comment_form) }}
     {% if comments|length > 0 %}
         <p>There are {{ comments |length }} comments.</p>
         {% for comment in comments %}
